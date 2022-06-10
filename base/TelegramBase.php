@@ -129,6 +129,8 @@ class TelegramBase extends Component
     public function send(string $method, ?array $params = null): array
     {
         $request_params = $this->initializeParams($params);
+        // var_dump($request_params);
+        // die('#11111111111');
         $response = $this->getClient()->post('/bot' . $this->botToken . $method, $request_params);
         return json_decode($response->getBody(), true);
     }

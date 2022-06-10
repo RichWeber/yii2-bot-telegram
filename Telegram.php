@@ -17,7 +17,7 @@ class Telegram extends TelegramBase
      */
     public function getMe(): Response
     {
-        $body = $this->send('/getMe');
+        $body = $this->send('/getMe', []);
         return new Response([
             'ok' => $body['ok'],
             'result' => [
@@ -320,6 +320,11 @@ class Telegram extends TelegramBase
     public function setWebhook(array $params = [])
     {
         return $this->send('/setWebhook', $params);
+    }
+
+    public function getWebhookInfo(array $params = [])
+    {
+        return $this->send('/getWebhookInfo', $params);
     }
 
     /**
