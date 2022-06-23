@@ -53,10 +53,7 @@ class TelegramBase extends Component
     protected function getClient(): Client
     {
         if (empty($this->_client)) {
-            $this->_client = new Client([
-                'base_uri' => $this->apiUrl,
-                'verify' => false,
-            ]);
+            $this->_client = new Client(['base_uri' => $this->apiUrl]);
         }
         return $this->_client;
     }
@@ -132,10 +129,19 @@ class TelegramBase extends Component
     public function send(string $method, ?array $params = null): array
     {
         $request_params = $this->initializeParams($params);
-        // var_dump($request_params);
-        // die('#11111111111');
-        $response = $this->getClient()->post('/bot' . $this->botToken . $method, $request_params);
-        return json_decode($response->getBody(), true);
+        try {
+            $response = $this->getClient()->post('/bot' . $this->botToken . $method, $request_params);
+            $result = json_decode($response->getBody(), true);
+        } catch (\Exception $exception) {
+            \Yii::error($exception->getMessage());
+            $result = [
+                'ok' => false,
+                'error_code' => $exception->getCode(),
+                'description' => $exception->getMessage(),
+            ];
+        }
+
+        return $result;
     }
 
     /**
