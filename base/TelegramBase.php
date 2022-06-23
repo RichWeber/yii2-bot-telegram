@@ -53,7 +53,10 @@ class TelegramBase extends Component
     protected function getClient(): Client
     {
         if (empty($this->_client)) {
-            $this->_client = new Client(['base_uri' => $this->apiUrl]);
+            $this->_client = new Client([
+                'base_uri' => $this->apiUrl,
+                'verify' => false,
+            ]);
         }
         return $this->_client;
     }
