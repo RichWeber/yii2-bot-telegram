@@ -153,6 +153,12 @@ class Telegram extends TelegramBase
         return new Response($body);
     }
 
+    public function editMessageReplyMarkup(array $params): Response
+    {
+        $body = $this->send('/editMessageReplyMarkup', $params);
+        return new Response($body);
+    }
+
     /**
      * @throws GuzzleException
      * @var array
@@ -419,6 +425,7 @@ class Telegram extends TelegramBase
     public function answerCallbackQuery(array $params = []): Response
     {
         $body = $this->send('/answerCallbackQuery', $params);
+        // \Yii::error($body);
         return new Response($body);
     }
 
